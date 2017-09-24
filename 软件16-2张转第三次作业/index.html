@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+	<title>登陆界面</title>
+	<style type="text/css">
+	    #sum{
+	    	height: 700px;
+            background-color: red;
+            background:url(text3_6.jpg)  0px 0px;
+	    }
+		#box{
+			font-color:red;
+			background-color: blue;
+			background:url(text3_3.jpg) no-repeat 0px 0px;
+			width:350px;
+			height: 400px;
+			
+			position: relative;
+			top:100px;
+			margin:0 auto;
+		}
+		#name{
+			position:relative;
+            top:40px;
+            left:30px;
+		}
+		#sex{
+			position:relative;
+            top:40px;
+            left:30px;
+		}
+		#password{
+			position:relative;
+            top:50px;
+            left:30px;
+		}
+		#repassword{
+			position:relative;
+            top:55px;
+            left:30px;
+		}
+		#email{
+			position:relative;
+            top:60px;
+            left:30px;
+		}
+		#submitbtn{
+			position:relative;
+			top:65px;
+			left:30px;
+		}
+	</style>
+</head>
+
+
+<body>
+<div id="sum">
+<div id="box">
+<script type="text/javascript" charset="utf-8">
+function check(name,reg,spanId,okInfo,errorInfo){
+    var flag;
+    var val = document.getElementsByName(name)[0].value;
+    var oSpanNode = document.getElementById(spanId);
+    if(reg.test(val)){
+        oSpanNode.innerHTML = okInfo.fontcolor("green");
+        flag = true;
+    }else{
+        oSpanNode.innerHTML = errorInfo.fontcolor("red");
+        flag = false;
+    }
+    return flag;
+}
+//表单总校验
+function checkForm(){
+    if(checkUser()&&checkPassword()&&checkRspassword()&&checkMail())
+    return true;
+    return false;
+    alert(checkUser()+"--"+checkPassword()+"--"+checkRspassword()+"--"+checkMail());
+}
+//校验用户名
+function checkUser(){
+//定义正则表达式,a-z，长度为4,忽略大小写
+    var reg = new RegExp("^[A-Za-z0-9]{4,24}$","");
+    check("username",reg,"namespan","合法","!!");
+}
+//校验密码
+function checkPassword(){
+    var reg = new RegExp("^[A-Za-z0-9/*/?]{8,12}$","i");
+    check("password",reg,"passwordspan","合法","!!");
+}
+
+//校验确认密码
+function checkRspassword(){
+    var flag;
+    //获取确认密码框里内容
+    var rspassword = document.getElementsByName("repassword")[0].value;
+    //获取密码框里内容
+    var password = document.getElementsByName("password")[0].value;
+    var oRepasswordSpan = document.getElementById("repasswordspan");
+    if (rspassword == password) {
+        oRepasswordSpan.innerHTML = "合法".fontcolor("green");
+        flag = true;
+    }
+    else {
+        oRepasswordSpan.innerHTML = "!!".fontcolor("red");
+        flag = false;
+    }
+    return flag;
+}
+
+//校验邮箱
+function checkMail(){
+    var reg = new RegExp("^\\w+@\\w+(\\.\\w{2,3})*\\.\\w{2,3}$");
+    check("mail",reg,"mailspan","合法","!!");
+}
+
+</script>
+    <form autocomplete="on" action="text.php" method="get" id="userInfo" onblur="return checkForm()">
+        <div id="name">
+	    (必填)账号(仅含数字和字母')
+	    <input type="text" name="username" maxlength="24" onblur="checkUser()" placeholder="数字+字母=4-24个" required>
+	    <span id="namespan"></span><br/><br>
+	    </div>
+
+	    <div id="sex">
+	    	性别 <br>
+            <input type="radio" name="sex" value="male">Male
+            <input type="radio" name="sex" value="female">Female
+            <input type="radio" name="sex" value="unknown" checked>unknown<br>
+	    </div>
+
+	    <div id="password">
+		(必填)输入密码<br>
+		<input type="password" name="password" maxlength="12" onblur="checkPassword()" placeholder="数字+字母+'*'+'?'=8-12个" autocomplete="off" required>
+		<span id="passwordspan"></span><br/><br>
+	    </div>
+
+	    <div id="repassword">
+		(必填)确认密码<br>
+		<input type="password" name="repassword"  maxlength="12" onblur="checkRspassword()" placeholder="确认密码" autocomplete="off" required>
+		<span id="repasswordspan"></span><br/><br>
+	    </div>
+
+	    
+	    <div id="email">
+	    	(选填)邮件地址<br>
+	    	<input type="text" name="mail" onblur="checkMail()">
+            <span id="mailspan"></span><br/><br>
+	    </div>
+
+        <input type="submit" value="注册"  id="submitbtn">
+    </form>
+	
+
+</div>
+</div>
+</body>
+</html>
